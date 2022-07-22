@@ -82,7 +82,7 @@ final class GDT_Position extends GDT_String
 		return $input ? "[{$input}]" : null;
 	}
 	
-	public function toValue($var)
+	public function toValue(string $var=null)
 	{
 		$coords = $var ? json_decode($var, true) : [null, null];
 		return new Position($coords[0], $coords[1]);
