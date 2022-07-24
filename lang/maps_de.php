@@ -1,7 +1,9 @@
 <?php
-return array(
-	'err_longitude' => 'Der Längengrad ist ungültig.',
-	'err_latitude' => 'Der Breitengrad ist ungültig.',
-	
+namespace GDO\Maps\lang;
+return [
 	'position' => 'Position',
-);
+	'latitude' => 'Latitude',
+	'longitude' => 'Longitude',
+
+	'err_no_position' => 'Es liegen keine Positionsdaten vor.',
+];

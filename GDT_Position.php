@@ -1,13 +1,8 @@
 <?php
 namespace GDO\Maps;
 
-use GDO\Core\GDO;
-use GDO\Core\GDT_Template;
-use GDO\DB\WithDatabase;
-use GDO\Form\WithFormFields;
-use GDO\UI\WithLabel;
-use GDO\UI\WithIcon;
-use GDO\Core\GDT_String;
+use GDO\User\GDO_User;
+use GDO\Core\GDT_Composite;
 
 /**
  * Lat/Lng position GDT.
@@ -16,112 +11,100 @@ use GDO\Core\GDT_String;
  * @see Position
  * 
  * @author gizmore
- * @version 6.11.0
+ * @version 7.0.1
  * @since 6.2.0
  */
-final class GDT_Position extends GDT_String
+final class GDT_Position extends GDT_Composite
 {
-	use WithLabel;
-	use WithDatabase;
-	use WithFormFields;
-	use WithIcon;
-	
 	public function defaultLabel() : self { return $this->label('position'); }
 	
-	##########
-	### DB ###
-	##########
-	public function blankData()
+	public GDT_Lat $lat;
+	public GDT_Lng $lng;
+	
+	protected function __construct()
 	{
-	    if ($this->initial === null)
-	    {
-	        return [
-    			"{$this->name}_lat" => null,
-    			"{$this->name}_lng" => null,
-	        ];
-	    }
-	    return [
-	        "{$this->name}_lat" => $this->initial[0],
-	        "{$this->name}_lng" => $this->initial[1],
-        ];
-	}
-		
-	public function gdoColumnNames()
-	{
-		return [
-			"{$this->name}_lat",
-			"{$this->name}_lng",
-		];
+		parent::__construct();
+		$this->horizontal();
 	}
 	
-	public function gdoColumnDefine()
+	public function gdoCompositeFields() : array
 	{
-		$defaultLat = isset($this->initial[0]) ? (" DEFAULT ".GDO::quoteS($this->initial[0])) : '';
-		$defaultLng = isset($this->initial[1]) ? (" DEFAULT ".GDO::quoteS($this->initial[1])) : '';
-		return
-			"{$this->name}_lat DECIMAL(9,6){$this->gdoNullDefine()}{$defaultLat},\n".
-			"{$this->name}_lng DECIMAL(9,6){$this->gdoNullDefine()}{$defaultLng}";
+		$name = $this->name;
+		$this->lat = GDT_Lat::make("{$name}_lat");
+		$this->lng = GDT_Lng::make("{$name}_lng");
+		return [
+			$this->lat,
+			$this->lng,
+		];
 	}
 	
 	########################
 	### Current Position ###
 	########################
-	public $defaultCurrent = false;
-	public function defaultCurrent($defaultCurrent=true)
+	public bool $defaultCurrent = false;
+	public function defaultCurrent(bool $defaultCurrent=true) : self
 	{
-		$this->defaultCurrent = $defaultCurrent;
+		if (Module_Maps::instance()->cfgRecord())
+		{
+			$this->defaultCurrent = $defaultCurrent;
+			$user = GDO_User::current();
+			$position = $user->settingValue('Maps', 'position');
+			return $this->initialPosition($position);
+		}
 		return $this;
 	}
 
 	#############
 	### Value ###
 	#############
-	public function inputToVar($input)
+// 	public function inputToVar($input = null) : ?string
+// 	{
+// 		$input = trim($input, "\r\n\t []");
+// 		return $input ? "[{$input}]" : null;
+// 	}
+	
+	public function getValue()
 	{
-		$input = trim($input, "\r\n\t []");
-		return $input ? "[{$input}]" : null;
+		$lat = $this->lat->getValue();
+		$lng = $this->lng->getValue();
+		if ( ($lat !== null) && ($lng !== null) )
+		{
+			return new Position($lat, $lng);
+		}
+		return null;
 	}
 	
-	public function toValue(string $var=null)
+// 	public function toVar($value) : ?string
+// 	{
+// 	    return $value === null ? null : json_encode(
+// 	        [$value->getLat(), $value->getLng()]);
+// 	}
+
+	public function initialPosition(Position $position) : self
 	{
-		$coords = $var ? json_decode($var, true) : [null, null];
-		return new Position($coords[0], $coords[1]);
+		return $this->initialLatLng($position->getLat(), $position->getLng());
 	}
 	
-	public function toVar($value)
+	public function initialLatLng(float $lat, float $lng) : self
 	{
-	    return $value === null ? null : json_encode(
-	        [$value->getLat(), $value->getLng()]);
+		$this->lat->initial($lat);
+		$this->lng->initial($lng);
+		return $this;
 	}
 	
-	public function initialLatLng($lat, $lng)
-	{
-		return parent::initial("[$lat,$lng]");
-	}
+// 	public function initial(string $var) : self
+// 	{
+		
+// 	}
 	
-	public function getLat()
+	public function getLat() : string
 	{
-		return $this->getValue()->getLat();
+		return $this->lat->getVar();
 	}
 
-	public function getLng()
+	public function getLng() : string
 	{
-		return $this->getValue()->getLng();
-	}
-	
-	public function getGDOData()
-	{
-		return array(
-			"{$this->name}_lat" => $this->getLat(),
-			"{$this->name}_lng" => $this->getLng(),
-		);
-	}
-	
-	public function setGDOData(GDO $gdo=null)
-	{
-		$lat = $gdo->gdoVar("{$this->name}_lat");
-		$lng = $gdo->gdoVar("{$this->name}_lng");
-		return ($lat && $lng) ? $this->var("[$lat,$lng]") : $this->var(null);
+		return $this->lng->getVar();
 	}
 	
 	##############
@@ -135,41 +118,51 @@ final class GDT_Position extends GDT_String
 			'defaultCurrent' => $this->defaultCurrent,
 		];
 	}
-	public function renderForm()
+	public function renderCLI() : string
 	{
-		return GDT_Template::php('Maps', 'form/position.php', ['field' => $this]);
+		/**
+		 * @var Position $pos
+		 */
+		$pos = $this->getValue();
+		return $pos->displayLat() . $pos->displayLng();
 	}
-	public function renderCell() : string
-	{
-		return GDT_Template::php('Maps', 'cell/position.php', ['field' => $this]);
-	}
+	
+// 	public function renderForm() : string
+// 	{
+// 		return GDT_Template::php('Maps', 'form/position.php', ['field' => $this]);
+// 	}
+	
+// 	public function renderCell() : string
+// 	{
+// 		return GDT_Template::php('Maps', 'cell/position.php', ['field' => $this]);
+// 	}
 	
 	##################
 	### Validation ###
 	##################
-	public function validate($value) : bool
-	{
-		if ($value === null)
-		{
-			return $this->notNull ? $this->errorNotNull() : true;
-		}
-		return $this->validatePosition($value);
-	}
+// 	public function validate($value) : bool
+// 	{
+// 		if ($value === null)
+// 		{
+// 			return $this->notNull ? $this->errorNotNull() : true;
+// 		}
+// 		return $this->validatePosition($value);
+// 	}
 	
-	private function validatePosition(Position $pos)
-	{
-		if (!$pos->hasValidLat())
-		{
-			return $this->error('err_latitude');
-		}
-		elseif (!$pos->hasValidLng())
-		{
-			return $this->error('err_longitude');
-		}
-		else
-		{
-			return true;
-		}
-	}
+// 	private function validatePosition(Position $pos) : bool
+// 	{
+// 		if (!$pos->hasValidLat())
+// 		{
+// 			return $this->error('err_latitude');
+// 		}
+// 		elseif (!$pos->hasValidLng())
+// 		{
+// 			return $this->error('err_longitude');
+// 		}
+// 		else
+// 		{
+// 			return true;
+// 		}
+// 	}
 
 }

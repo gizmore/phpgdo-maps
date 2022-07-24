@@ -1,9 +1,10 @@
 <?php
+use GDO\Core\GDT_String;
 use GDO\Maps\GDT_Position;
 use GDO\UI\GDT_Icon;
 $field instanceof GDT_Position;
 ?>
-<?php /** @var $field \GDO\DB\GDT_String **/ ?>
+<?php /** @var $field GDT_String **/ ?>
 <div class="gdt-container<?= $field->classError(); ?>">
   <label <?=$field->htmlForID()?>><?= $field->displayLabel(); ?></label>
   <?= $field->htmlIcon(); ?>
