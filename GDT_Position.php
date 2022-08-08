@@ -57,12 +57,6 @@ final class GDT_Position extends GDT_Composite
 	#############
 	### Value ###
 	#############
-// 	public function inputToVar($input = null) : ?string
-// 	{
-// 		$input = trim($input, "\r\n\t []");
-// 		return $input ? "[{$input}]" : null;
-// 	}
-	
 	public function getValue()
 	{
 		$lat = $this->lat->getValue();
@@ -74,12 +68,6 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 	
-// 	public function toVar($value) : ?string
-// 	{
-// 	    return $value === null ? null : json_encode(
-// 	        [$value->getLat(), $value->getLng()]);
-// 	}
-
 	public function initialPosition(Position $position) : self
 	{
 		return $this->initialLatLng($position->getLat(), $position->getLng());
@@ -91,11 +79,6 @@ final class GDT_Position extends GDT_Composite
 		$this->lng->initial($lng);
 		return $this;
 	}
-	
-// 	public function initial(string $var) : self
-// 	{
-		
-// 	}
 	
 	public function getLat() : string
 	{
@@ -126,43 +109,5 @@ final class GDT_Position extends GDT_Composite
 		$pos = $this->getValue();
 		return $pos->displayLat() . $pos->displayLng();
 	}
-	
-// 	public function renderForm() : string
-// 	{
-// 		return GDT_Template::php('Maps', 'form/position.php', ['field' => $this]);
-// 	}
-	
-// 	public function renderCell() : string
-// 	{
-// 		return GDT_Template::php('Maps', 'cell/position.php', ['field' => $this]);
-// 	}
-	
-	##################
-	### Validation ###
-	##################
-// 	public function validate($value) : bool
-// 	{
-// 		if ($value === null)
-// 		{
-// 			return $this->notNull ? $this->errorNotNull() : true;
-// 		}
-// 		return $this->validatePosition($value);
-// 	}
-	
-// 	private function validatePosition(Position $pos) : bool
-// 	{
-// 		if (!$pos->hasValidLat())
-// 		{
-// 			return $this->error('err_latitude');
-// 		}
-// 		elseif (!$pos->hasValidLng())
-// 		{
-// 			return $this->error('err_longitude');
-// 		}
-// 		else
-// 		{
-// 			return true;
-// 		}
-// 	}
 
 }
