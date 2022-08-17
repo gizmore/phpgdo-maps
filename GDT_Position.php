@@ -3,6 +3,7 @@ namespace GDO\Maps;
 
 use GDO\User\GDO_User;
 use GDO\Core\GDT_Composite;
+use GDO\UI\TextStyle;
 
 /**
  * Lat/Lng position GDT.
@@ -103,11 +104,24 @@ final class GDT_Position extends GDT_Composite
 	}
 	public function renderCLI() : string
 	{
+		if ($label = $this->renderLabel())
+		{
+			$label .= ': ';
+		}
+		
 		/**
 		 * @var Position $pos
 		 */
-		$pos = $this->getValue();
-		return $pos->displayLat() . $pos->displayLng();
+		if ($pos = $this->getValue())
+		{
+			$pos = $pos->displayLat() . $pos->displayLng();
+		}
+		else
+		{
+			$pos = TextStyle::italic(t('unknown'));
+		}
+		
+		return $label . $pos;
 	}
 
 }
