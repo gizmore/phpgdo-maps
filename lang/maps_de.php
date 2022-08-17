@@ -6,4 +6,7 @@ return [
 	'longitude' => 'Longitude',
 
 	'err_no_position' => 'Es liegen keine Positionsdaten vor.',
+
+	'mt_maps_record' => 'Aufzeichnung',
+	
 ];
