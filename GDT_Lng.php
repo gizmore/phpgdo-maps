@@ -20,4 +20,11 @@ final class GDT_Lng extends GDT_Float
 		$this->min(-180)->max(180);
 	}
 	
+	public function plugVars() : array
+	{
+		return [
+			[$this->getName() => '10.2352'],
+		];
+	}
+
 }
