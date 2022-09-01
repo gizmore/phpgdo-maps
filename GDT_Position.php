@@ -9,11 +9,10 @@ use GDO\UI\TextStyle;
  * Lat/Lng position GDT.
  * Adds two columns to a database table.
  * 
- * @see Position
- * 
  * @author gizmore
  * @version 7.0.1
  * @since 6.2.0
+ * @see Position
  */
 final class GDT_Position extends GDT_Composite
 {
@@ -54,10 +53,38 @@ final class GDT_Position extends GDT_Composite
 		}
 		return $this;
 	}
+	
+	###########
+	### Var ###
+	###########
+	public function toVar($value) : ?string
+	{
+		if ($value === null)
+		{
+			return null;
+		}
+		/** @var $value Position **/
+		return json_encode([$value->getLat(), $value->getLng()]);
+	}
+	
+	public function toValue($var = null)
+	{
+		if ($var === null)
+		{
+			return null;
+		}
+		list($lat, $lng) = json_decode($var, true);
+		return new Position($lat, $lng);
+	}
 
 	#############
 	### Value ###
 	#############
+	public function getPosition() : ?Position
+	{
+		return $this->getValue();
+	}
+	
 	public function getValue()
 	{
 		$lat = $this->lat->getValue();
@@ -102,6 +129,7 @@ final class GDT_Position extends GDT_Composite
 			'defaultCurrent' => $this->defaultCurrent,
 		];
 	}
+	
 	public function renderCLI() : string
 	{
 		if ($label = $this->renderLabel())
@@ -109,10 +137,7 @@ final class GDT_Position extends GDT_Composite
 			$label .= ': ';
 		}
 		
-		/**
-		 * @var Position $pos
-		 */
-		if ($pos = $this->getValue())
+		if ($pos = $this->getPosition())
 		{
 			$pos = $pos->displayLat() . $pos->displayLng();
 		}
