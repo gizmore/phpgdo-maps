@@ -8,5 +8,6 @@ return [
 	'err_no_position' => 'Es liegen keine Positionsdaten vor.',
 
 	'mt_maps_record' => 'Aufzeichnung',
+	'msg_location_recorded' => 'Ihr Standort wurde aufgezeichnet.',
 	
 ];

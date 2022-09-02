@@ -8,4 +8,6 @@ return [
 	'err_no_position' => 'I have no positional data.',
 	
 	'mt_maps_record' => 'Record',
+	'msg_location_recorded' => 'Your position has been recorded.',
+
 ];
