@@ -2,11 +2,9 @@
 namespace GDO\Maps;
 
 use GDO\Core\GDO_Module;
-use GDO\Core\GDT_Template;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Secret;
 use GDO\Core\Javascript;
-use GDO\UI\GDT_Page;
 
 /**
  * Maps API helper and geolocation services.
@@ -82,7 +80,10 @@ final class Module_Maps extends GDO_Module
 	
 	public function onIncludeScripts() : void
 	{
-		Javascript::addJS($this->googleMapsScriptURL());
+		if ($this->cfgGoogle())
+		{
+			Javascript::addJS($this->googleMapsScriptURL());
+		}
 		$this->addJS('js/gdo-maps.js');
 		$this->addCSS('css/gdo-maps.css');
 		if ($this->cfgRecord())
@@ -95,11 +96,11 @@ final class Module_Maps extends GDO_Module
 	{
 	    if ($this->cfgSidebar())
 	    {
-	        if (module_enabled('Angular'))
-	        {
-	            $navbar = GDT_Page::$INSTANCE->rightBar();
-	            $navbar->addField(GDT_Template::make()->template('Maps', 'maps-navbar.php'));
-	        }
+// 	        if (module_enabled('Angular'))
+// 	        {
+// 	            $navbar = GDT_Page::$INSTANCE->rightBar();
+// 	            $navbar->addField(GDT_Template::make()->template('Maps', 'maps-navbar.php'));
+// 	        }
 	    }
 	}
 	
