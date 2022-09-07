@@ -98,24 +98,31 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 	
-	public function initialPosition(Position $position) : self
+	public function initialPosition(?Position $position) : self
 	{
-		return $this->initialLatLng($position->getLat(), $position->getLng());
+		if ($position === null)
+		{
+			return $this->initialLatLng(null, null);
+		}
+		else
+		{
+			return $this->initialLatLng($position->getLat(), $position->getLng());
+		}
 	}
 	
-	public function initialLatLng(float $lat, float $lng) : self
+	public function initialLatLng(?float $lat, ?float $lng) : self
 	{
 		$this->lat->initial($lat);
 		$this->lng->initial($lng);
 		return $this;
 	}
 	
-	public function getLat() : string
+	public function getLat() : ?string
 	{
 		return $this->lat->getVar();
 	}
 
-	public function getLng() : string
+	public function getLng() : ?string
 	{
 		return $this->lng->getVar();
 	}
