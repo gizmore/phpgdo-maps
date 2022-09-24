@@ -28,6 +28,13 @@ final class Module_Maps extends GDO_Module
 		];
 	}
 	
+	public function getDependencies() : array
+	{
+		return [
+			'JQuery',
+		];
+	}
+	
 	public function getLicenseFilenames() : array
 	{
 		return [
@@ -92,17 +99,17 @@ final class Module_Maps extends GDO_Module
 		}
 	}
 	
-	public function onInitSidebar() : void
-	{
-	    if ($this->cfgSidebar())
-	    {
-// 	        if (module_enabled('Angular'))
-// 	        {
-// 	            $navbar = GDT_Page::$INSTANCE->rightBar();
-// 	            $navbar->addField(GDT_Template::make()->template('Maps', 'maps-navbar.php'));
-// 	        }
-	    }
-	}
+// 	public function onInitSidebar() : void
+// 	{
+// 	    if ($this->cfgSidebar())
+// 	    {
+// // 	        if (module_enabled('Angular'))
+// // 	        {
+// // 	            $navbar = GDT_Page::$INSTANCE->rightBar();
+// // 	            $navbar->addField(GDT_Template::make()->template('Maps', 'maps-navbar.php'));
+// // 	        }
+// 	    }
+// 	}
 	
 	private function googleMapsScriptURL()
 	{
@@ -114,6 +121,14 @@ final class Module_Maps extends GDO_Module
 		}
 		return sprintf('https://maps.google.com/maps/api/js?sensors=%s%s',
 			$sensors, $apikey);
+	}
+	
+	###########
+	### API ###
+	###########
+	public function getMapsURL(string $searchTerm) : string
+	{
+		return 'https://www.google.com/maps/search/?api=1&query=' . urlencode($searchTerm);
 	}
 	
 }
