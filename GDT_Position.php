@@ -44,12 +44,12 @@ final class GDT_Position extends GDT_Composite
 	########################
 	### Current Position ###
 	########################
-	public bool $defaultCurrent = false;
-	public function defaultCurrent(bool $defaultCurrent=true) : self
+	public bool $initialCurrent = false;
+	public function initialCurrent(bool $initialCurrent=true) : self
 	{
 		if (Module_Maps::instance()->cfgRecord())
 		{
-			$this->defaultCurrent = $defaultCurrent;
+			$this->initialCurrent = $initialCurrent;
 			$user = GDO_User::current();
 			$position = $user->settingValue('Maps', 'position');
 			return $this->initialPosition($position);
@@ -136,7 +136,7 @@ final class GDT_Position extends GDT_Composite
 		return [
 			'lat' => $this->getLat(),
 			'lng' => $this->getLng(),
-			'defaultCurrent' => $this->defaultCurrent,
+			'initialCurrent' => $this->initialCurrent,
 		];
 	}
 	
