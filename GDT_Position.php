@@ -79,7 +79,37 @@ final class GDT_Position extends GDT_Composite
 		list($lat, $lng) = json_decode($var, true);
 		return new Position($lat, $lng);
 	}
+	
+	public function getVar() : ?string
+	{
+		$lat = $this->lat->getVar();
+		$lng = $this->lng->getVar();
+		if ($lat && $lng)
+		{
+			return json_encode([$lat, $lng]);
+		}
+		return null;
+	}
+	
+	public function var(string $var = null): self
+	{
+		if ($var !== null)
+		{
+			$pos = $this->toValue($var);
+			$this->lat->var((string)$pos->getLat());
+			$this->lng->var((string)$pos->getLng());
+		}
+		return $this;
+	}
 
+// 	public function getGDOData() : array
+// 	{
+// 		return [
+// 			$this->lat->name => $this->lat->getVar(),
+// 			$this->lng->name => $this->lng->getVar(),
+// 		];
+// 	}
+	
 	#############
 	### Value ###
 	#############
