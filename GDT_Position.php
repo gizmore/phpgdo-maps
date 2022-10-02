@@ -17,6 +17,7 @@ use GDO\UI\TextStyle;
 final class GDT_Position extends GDT_Composite
 {
 	public function isSerializable() : bool { return true; }
+	public function isSearchable() :  bool { return false; }
 	
 	public function defaultLabel() : self { return $this->label('position'); }
 	
