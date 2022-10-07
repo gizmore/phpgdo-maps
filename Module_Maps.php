@@ -3,9 +3,16 @@ namespace GDO\Maps;
 
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
+use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Secret;
 use GDO\Core\Javascript;
 use GDO\Date\GDT_Duration;
+use GDO\UI\GDT_DIV;
+use GDO\UI\GDT_Panel;
+use GDO\UI\GDT_Accordeon;
+use GDO\UI\GDT_Card;
+use GDO\UI\GDT_Divider;
+use GDO\User\GDO_User;
 
 /**
  * Maps API helper and geolocation services.
@@ -50,11 +57,14 @@ final class Module_Maps extends GDO_Module
 	public function getConfig() : array
 	{
 		return [
+			# GOOGLE
 		    GDT_Checkbox::make('maps_api_google')->initial('1'),
 			GDT_Secret::make('maps_api_key')->max(64)->initial(@include($this->filePath('apikey.php'))),
 			GDT_Checkbox::make('maps_sensors')->initial('0'),
+			# OWN RECORDING
 			GDT_Checkbox::make('maps_record')->initial('1'),
 			GDT_Duration::make('maps_record_history')->initial('0s'),
+			# LALALA
 			GDT_Checkbox::make('hook_sidebar')->initial('0'),
 		];
 	}
@@ -76,6 +86,19 @@ final class Module_Maps extends GDO_Module
 				GDT_Position::make('position'),
 			];
 		}
+	}
+	
+	public function getPrivacyRelatedFields(): array
+	{
+		return [
+			GDT_Divider::make('info_div_maps_google'),
+			$this->getConfigColumn('maps_api_google'),
+			$this->getConfigColumn('maps_sensors'),
+			GDT_Divider::make('info_div_maps_gdo'),
+			$this->getConfigColumn('maps_record'),
+			$this->getConfigColumn('maps_record_history'),
+			$this->userSetting(GDO_User::current(), 'position'),
+		];
 	}
 	
 	############
