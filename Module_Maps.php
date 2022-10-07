@@ -3,14 +3,9 @@ namespace GDO\Maps;
 
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
-use GDO\Core\GDT_Response;
 use GDO\Core\GDT_Secret;
 use GDO\Core\Javascript;
 use GDO\Date\GDT_Duration;
-use GDO\UI\GDT_DIV;
-use GDO\UI\GDT_Panel;
-use GDO\UI\GDT_Accordeon;
-use GDO\UI\GDT_Card;
 use GDO\UI\GDT_Divider;
 use GDO\User\GDO_User;
 
