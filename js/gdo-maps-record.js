@@ -1,12 +1,5 @@
 "use strict";
 /**
- * On boot, detect user position.
- */
-document.addEventListener('DOMContentLoaded', function() {
-	setTimeout(window.GDO.positioning, 1);
-}, false);
-
-/**
  * Maps positioning
  */
 var GDO = GDO || {};
@@ -25,7 +18,7 @@ GDO.Maps.positioning = function() {
 GDO.Maps.gotPosition = function(pos) {
 	console.log('GDO.Maps.gotPosition()', pos);
 	let c = pos.coords;
-	window.GDO.gdoxhr('Maps', 'Record', '&pos_lat='+c.latitude+'&pos_lng='+c.longitude).then(function(result) {
+	window.GDO.gdoxhr('Maps', 'Record', '&_fmt=json&pos_lat='+c.latitude+'&pos_lng='+c.longitude).then(function(result) {
 		console.log('wrote position', result);
 	});
 };
