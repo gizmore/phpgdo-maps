@@ -85,15 +85,19 @@ final class Module_Maps extends GDO_Module
 	
 	public function getPrivacyRelatedFields(): array
 	{
-		return [
+		$back = [
 			GDT_Divider::make('info_div_maps_google'),
 			$this->getConfigColumn('maps_api_google'),
 			$this->getConfigColumn('maps_sensors'),
 			GDT_Divider::make('info_div_maps_gdo'),
 			$this->getConfigColumn('maps_record'),
 			$this->getConfigColumn('maps_record_history'),
-			$this->userSetting(GDO_User::current(), 'position'),
 		];
+		if ($this->cfgRecord())
+		{
+			$back[] = $this->userSetting(GDO_User::current(), 'position');
+		}
+		return $back;
 	}
 	
 	############
