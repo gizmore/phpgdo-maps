@@ -11,7 +11,7 @@ use GDO\Core\GDT_Float;
  */
 final class GDT_Lat extends GDT_Float
 {
-	public function defaultLabel() : self { return $this->label('latitude'); }
+	public function defaultLabel(): static { return $this->label('latitude'); }
 	
 	protected function __construct()
 	{

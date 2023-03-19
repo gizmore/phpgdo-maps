@@ -11,7 +11,7 @@ use GDO\Core\GDT_Float;
  */
 final class GDT_Lng extends GDT_Float
 {
-	public function defaultLabel() : self { return $this->label('longitude'); }
+	public function defaultLabel(): static { return $this->label('longitude'); }
 	
 	protected function __construct()
 	{

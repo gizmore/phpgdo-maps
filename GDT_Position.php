@@ -19,7 +19,7 @@ final class GDT_Position extends GDT_Composite
 	public function isSerializable() : bool { return true; }
 	public function isSearchable() :  bool { return false; }
 	
-	public function defaultLabel() : self { return $this->label('position'); }
+	public function defaultLabel(): static { return $this->label('position'); }
 	
 	public GDT_Lat $lat;
 	public GDT_Lng $lng;
@@ -45,7 +45,7 @@ final class GDT_Position extends GDT_Composite
 	### Current Position ###
 	########################
 	public bool $initialCurrent = false;
-	public function initialCurrent(bool $initialCurrent=true) : self
+	public function initialCurrent(bool $initialCurrent=true): static
 	{
 		if (Module_Maps::instance()->cfgRecord())
 		{
@@ -91,7 +91,7 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 	
-	public function var(string $var = null): self
+	public function var(string $var = null): static
 	{
 		if ($var !== null)
 		{
@@ -129,7 +129,7 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 	
-	public function initialPosition(?Position $position) : self
+	public function initialPosition(?Position $position): static
 	{
 		if ($position === null)
 		{
@@ -141,7 +141,7 @@ final class GDT_Position extends GDT_Composite
 		}
 	}
 	
-	public function initialLatLng(?float $lat, ?float $lng) : self
+	public function initialLatLng(?float $lat, ?float $lng): static
 	{
 		$this->lat->initial($lat);
 		$this->lng->initial($lng);

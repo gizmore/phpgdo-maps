@@ -29,7 +29,7 @@ final class GDO_UserPosition extends GDO
 		];
 	}
 
-	public static function record(GDO_User $user, Position $position) : self
+	public static function record(GDO_User $user, Position $position): static
 	{
 		return self::blank([
 			'up_user' => $user->getID(),
