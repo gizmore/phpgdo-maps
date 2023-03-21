@@ -1,7 +1,11 @@
 <?php
 namespace GDO\Maps\tpl;
-/** @var $pos \GDO\Maps\Position **/
-/** @var $field \GDO\Maps\GDT_Position **/
+
+use GDO\Maps\GDT_Position;
+use GDO\Maps\Position;
+
+/** @var $pos Position * */
+/** @var $field GDT_Position * */
 $pos = $field->getValue();
 if (!$pos)
 {

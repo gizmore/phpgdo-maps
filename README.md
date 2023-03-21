@@ -3,7 +3,6 @@
 Maps module for GDOv7. Google Maps, Geocoordinates.
 Javascript positioning.
 
-
 ### phpgdo-maps: License
 
 This module is optionally using googlemaps API.

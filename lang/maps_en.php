@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Maps\lang;
+
 return [
 	'module_maps' => 'Maps',
 	'position' => 'Position',
@@ -11,11 +12,11 @@ return [
 	'cfg_maps_record_history' => 'Position Interval(0=Off)',
 	'cfg_maps_record' => 'GDOv7 Positioning',
 	'info_div_maps_gdo' => 'Status of own positioning code and data.',
-	
+
 	# Records
 	'mt_maps_record' => 'Record',
 	'err_no_position' => 'I have no positional data.',
 	'msg_location_recorded' => 'Your position has been recorded.',
 
-	
+
 ];
