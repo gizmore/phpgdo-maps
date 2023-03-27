@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Maps\Method;
 
+use GDO\Core\GDT;
 use GDO\Core\MethodAjax;
 use GDO\Maps\GDO_UserPosition;
 use GDO\Maps\GDT_Position;
@@ -22,7 +23,7 @@ final class Record extends MethodAjax
 		];
 	}
 
-	public function execute()
+	public function execute(): GDT
 	{
 		$module = Module_Maps::instance();
 		$gdt = $this->gdoParameter('pos');

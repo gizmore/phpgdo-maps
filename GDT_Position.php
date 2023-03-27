@@ -48,7 +48,7 @@ final class GDT_Position extends GDT_Composite
 		];
 	}
 
-	public function toVar($value): ?string
+	public function toVar(null|bool|int|float|string|object|array $value): ?string
 	{
 		if ($value === null)
 		{
@@ -67,7 +67,7 @@ final class GDT_Position extends GDT_Composite
 		return $this->lat->getVar();
 	}
 
-	public function getVar(): ?string
+	public function getVar(): string|array|null
 	{
 		$lat = $this->lat->getVar();
 		$lng = $this->lng->getVar();
@@ -140,7 +140,7 @@ final class GDT_Position extends GDT_Composite
 
 
 
-	public function getValue()
+	public function getValue(): bool|int|float|string|array|null|object
 	{
 		$lat = $this->lat->getValue();
 		$lng = $this->lng->getValue();
@@ -151,7 +151,7 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 
-	public function var(string $var = null): self
+	public function var(?string $var): self
 	{
 		if ($var !== null)
 		{
@@ -162,7 +162,7 @@ final class GDT_Position extends GDT_Composite
 		return $this;
 	}
 
-	public function toValue($var = null)
+	public function toValue(null|string|array $var): null|bool|int|float|string|object|array
 	{
 		if ($var === null)
 		{

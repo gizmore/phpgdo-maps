@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Maps;
 
 use GDO\Core\GDO_Module;
+use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Secret;
 use GDO\Core\Javascript;
@@ -12,7 +14,7 @@ use GDO\User\GDO_User;
 /**
  * Maps API helper and geolocation services.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 4.0.0
  * @author gizmore
  * @see GDT_Position
@@ -65,7 +67,7 @@ final class Module_Maps extends GDO_Module
 		];
 	}
 
-	public function getUserConfig()
+	public function getUserConfig(): array
 	{
 		if ($this->cfgRecord())
 		{
@@ -73,6 +75,7 @@ final class Module_Maps extends GDO_Module
 				GDT_Position::make('position'),
 			];
 		}
+		return GDT::EMPTY_ARRAY;
 	}
 
 	public function cfgRecord(): bool { return $this->getConfigValue('maps_record'); }
@@ -123,7 +126,7 @@ final class Module_Maps extends GDO_Module
 	### Settings ###
 	################
 
-	private function googleMapsScriptURL()
+	private function googleMapsScriptURL(): string
 	{
 		$sensors = $this->cfgSensors() ? 'true' : 'false';
 		$apikey = $this->cfgApiKey();
