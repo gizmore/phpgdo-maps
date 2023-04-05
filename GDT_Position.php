@@ -54,7 +54,7 @@ final class GDT_Position extends GDT_Composite
 		{
 			return null;
 		}
-		/** @var $value Position * */
+		/** @var Position $value * */
 		return json_encode([$value->getLat(), $value->getLng()]);
 	}
 
@@ -151,7 +151,7 @@ final class GDT_Position extends GDT_Composite
 		return null;
 	}
 
-	public function var(?string $var): self
+	public function var(?string $var): static
 	{
 		if ($var !== null)
 		{

@@ -146,7 +146,7 @@ final class Module_Maps extends GDO_Module
 
 	public function cfgApiKey(): string { return $this->getConfigVar('maps_api_key'); }
 
-	public function cfgHistory(): bool { return $this->getConfigValue('maps_record_history'); }
+	public function cfgHistory(): float { return $this->getConfigValue('maps_record_history'); }
 
 // 	public function onInitSidebar() : void
 // 	{
