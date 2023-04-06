@@ -148,18 +148,6 @@ final class Module_Maps extends GDO_Module
 
 	public function cfgHistory(): float { return $this->getConfigValue('maps_record_history'); }
 
-// 	public function onInitSidebar() : void
-// 	{
-// 	    if ($this->cfgSidebar())
-// 	    {
-// // 	        if (module_enabled('Angular'))
-// // 	        {
-// // 	            $navbar = GDT_Page::$INSTANCE->rightBar();
-// // 	            $navbar->addField(GDT_Template::make()->template('Maps', 'maps-navbar.php'));
-// // 	        }
-// 	    }
-// 	}
-
 	public function cfgSidebar(): bool { return $this->getConfigValue('hook_sidebar'); }
 
 	###########
