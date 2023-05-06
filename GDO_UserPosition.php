@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Maps;
 
 use GDO\Core\GDO;
@@ -11,7 +12,7 @@ use GDO\User\GDT_User;
  * This table tracks user positions.
  * This behaviour is disabled by default.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 7.0.1
  * @author gizmore
  */

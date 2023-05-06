@@ -49,6 +49,13 @@ final class Module_Maps extends GDO_Module
 		];
 	}
 
+	public function getClasses(): array
+	{
+		return [
+			GDO_UserPosition::class,
+		];
+	}
+
 	##############
 	### Config ###
 	##############

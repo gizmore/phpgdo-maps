@@ -1,6 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Maps\Method;
 
+use GDO\Core\GDO_ArgException;
 use GDO\Core\GDT;
 use GDO\Core\MethodAjax;
 use GDO\Maps\GDO_UserPosition;
@@ -12,9 +14,11 @@ use GDO\User\GDO_User;
  * Record user location.
  *
  * @author gizmore
+ * @version 7.0.3
  */
 final class Record extends MethodAjax
 {
+
 
 	public function gdoParameters(): array
 	{
@@ -23,6 +27,9 @@ final class Record extends MethodAjax
 		];
 	}
 
+	/**
+	 * @throws GDO_ArgException
+	 */
 	public function execute(): GDT
 	{
 		$module = Module_Maps::instance();
