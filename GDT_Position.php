@@ -141,7 +141,7 @@ final class GDT_Position extends GDT_Composite
 
 
 
-	public function getValue(): bool|int|float|string|array|null|object
+	public function getValue(): mixed
 	{
 		$lat = $this->lat->getValue();
 		$lng = $this->lng->getValue();
