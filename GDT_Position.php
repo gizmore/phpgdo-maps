@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Maps;
 
+use GDO\Core\GDT;
 use GDO\Core\GDT_Composite;
 use GDO\UI\TextStyle;
 use GDO\User\GDO_User;

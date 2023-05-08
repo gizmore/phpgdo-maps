@@ -30,7 +30,8 @@ final class MapsTest extends TestCase
 			'pos_lat' => (string)30.37,
 			'pos_lng' => (string)40.42,
 		];
-		$r = Record::make()->executeWithInputs($i)->render();
+		$r = Record::make()->executeWithInputs($i);
+		$r = $r->render();
 		self::assertStringContainsString('Your position has been recorded.', $r, 'Test if current position recording is working.');
 	}
 

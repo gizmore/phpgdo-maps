@@ -68,7 +68,7 @@ final class Module_Maps extends GDO_Module
 			GDT_Checkbox::make('maps_sensors')->initial('0'),
 			# OWN RECORDING
 			GDT_Checkbox::make('maps_record')->initial('1'),
-			GDT_Duration::make('maps_record_history')->initial('0s'),
+			GDT_Duration::make('maps_record_history')->initial('60s')->min(30),
 			# LALALA
 			GDT_Checkbox::make('hook_sidebar')->initial('0'),
 		];
@@ -88,6 +88,7 @@ final class Module_Maps extends GDO_Module
 	public function cfgRecord(): bool { return $this->getConfigValue('maps_record'); }
 
 	public function getPrivacyRelatedFields(): array
+
 	{
 		$back = [
 			GDT_Divider::make('info_div_maps_google'),
@@ -95,15 +96,14 @@ final class Module_Maps extends GDO_Module
 			$this->getConfigColumn('maps_sensors'),
 			GDT_Divider::make('info_div_maps_gdo'),
 			$this->getConfigColumn('maps_record'),
-			$this->getConfigColumn('maps_record_history'),
 		];
 		if ($this->cfgRecord())
 		{
+			$back[] = $this->getConfigColumn('maps_record_history');
 			$back[] = $this->userSetting(GDO_User::current(), 'position');
 		}
 		return $back;
 	}
-
 	public function onLoadLanguage(): void
 	{
 		$this->loadLanguage('lang/maps');
@@ -122,7 +122,7 @@ final class Module_Maps extends GDO_Module
 			$this->addJS('js/gdo-maps-record.js');
 			if ($interval = $this->cfgHistory())
 			{
-				Javascript::addJSPreInline("var GDO_MAPS_HISTORY = {$interval};");
+				Javascript::addJSPreInline("window.GDO_MAPS_HISTORY = {$interval};");
 			}
 		}
 	}

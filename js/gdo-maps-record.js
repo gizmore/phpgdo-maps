@@ -7,12 +7,7 @@ GDO.Maps = GDO.Maps || {};
 
 GDO.Maps.positioning = function() {
 	console.log('GDO.Maps.positioning()');
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(GDO.Maps.gotPosition, GDO.error);
-	}
-	if (window.GDO_MAPS_HISTORY) {
-		setTimeout(GDO.Maps.positioning, window.GDO_MAPS_HISTORY);
-	}
+	navigator.geolocation.getCurrentPosition(GDO.Maps.gotPosition, GDO.error);
 };
 
 GDO.Maps.gotPosition = function(pos) {
@@ -23,4 +18,6 @@ GDO.Maps.gotPosition = function(pos) {
 	});
 };
 
-GDO.Maps.positioning();
+if (navigator.geolocation) {
+    setInterval(GDO.Maps.positioning, window.GDO_MAPS_HISTORY * 1000);
+}

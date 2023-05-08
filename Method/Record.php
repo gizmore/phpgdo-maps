@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace GDO\Maps\Method;
 
-use GDO\Core\GDO_ArgException;
+use GDO\Core\GDO_ArgError;
 use GDO\Core\GDT;
 use GDO\Core\MethodAjax;
 use GDO\Maps\GDO_UserPosition;
@@ -28,7 +28,7 @@ final class Record extends MethodAjax
 	}
 
 	/**
-	 * @throws GDO_ArgException
+	 * @throws GDO_ArgError
 	 */
 	public function execute(): GDT
 	{
