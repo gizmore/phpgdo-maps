@@ -21,11 +21,16 @@ final class GDO_UserPosition extends GDO
 
 	public static function record(GDO_User $user, Position $position): self
 	{
-		return self::blank([
-			'up_user' => $user->getID(),
-			'up_pos_lat' => $position->getLat(),
-			'up_pos_lng' => $position->getLng(),
-		])->insert();
+        $blank = self::blank([
+                'up_user' => $user->getID(),
+                'up_pos_lat' => $position->getLat(),
+                'up_pos_lng' => $position->getLng(),
+            ]);
+        if ($user->isPersisted())
+        {
+            $blank->insert();
+        }
+        return $blank;
 	}
 
 	public function gdoCached(): bool { return false; }
