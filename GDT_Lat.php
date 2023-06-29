@@ -19,7 +19,8 @@ final class GDT_Lat extends GDT_Float
 		$this->min(-90)->max(90);
 	}
 
-	public function defaultLabel(): self { return $this->label('latitude'); }
+	public function gdtDefaultLabel(): ?string
+    { return 'latitude'; }
 
 	public function plugVars(): array
 	{

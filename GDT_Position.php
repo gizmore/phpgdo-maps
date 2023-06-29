@@ -32,7 +32,8 @@ final class GDT_Position extends GDT_Composite
 
 	public function isSearchable(): bool { return false; }
 
-	public function defaultLabel(): self { return $this->label('position'); }
+	public function gdtDefaultLabel(): ?string
+    { return 'position'; }
 
 	########################
 	### Current Position ###

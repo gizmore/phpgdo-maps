@@ -19,7 +19,8 @@ final class GDT_Lng extends GDT_Float
 		$this->min(-180)->max(180);
 	}
 
-	public function defaultLabel(): self { return $this->label('longitude'); }
+	public function gdtDefaultLabel(): ?string
+    { return 'longitude'; }
 
 	public function plugVars(): array
 	{
