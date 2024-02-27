@@ -76,19 +76,14 @@ final class Module_Maps extends GDO_Module
 
 	public function getUserConfig(): array
 	{
-		if ($this->cfgRecord())
-		{
-			return [
-				GDT_Position::make('position'),
-			];
-		}
-		return GDT::EMPTY_ARRAY;
+		return [
+			GDT_Position::make('position'),
+		];
 	}
 
 	public function cfgRecord(): bool { return $this->getConfigValue('maps_record'); }
 
 	public function getPrivacyRelatedFields(): array
-
 	{
 		$back = [
 			GDT_Divider::make('info_div_maps_google'),
