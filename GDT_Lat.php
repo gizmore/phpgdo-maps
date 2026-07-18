@@ -20,7 +20,9 @@ final class GDT_Lat extends GDT_Float
 	}
 
 	public function gdtDefaultLabel(): ?string
-    { return 'latitude'; }
+    {
+        return 'latitude';
+    }
 
 	public function plugVars(): array
 	{
