@@ -21,6 +21,11 @@ final class Position
 		$this->lng = $lng;
 	}
 
+    public function distanceCalculationPos(Position $that, int $decimals=6): float
+    {
+        return self::distanceCalculation($this->lat, $this->lng, $that->lat, $that->lng, 'km', $decimals);
+    }
+
 	/**
 	 * http://assemblysys.com/geographical-distance-calculation-in-php/
 	 *
@@ -33,7 +38,7 @@ final class Position
 	 *
 	 * @return float
 	 */
-	public static function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 2)
+	public static function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 6)
 	{
 		// Calculate the distance in degrees
 		$degrees = rad2deg(acos((sin(deg2rad($point1_lat)) * sin(deg2rad($point2_lat))) + (cos(deg2rad($point1_lat)) * cos(deg2rad($point2_lat)) * cos(deg2rad($point1_long - $point2_long)))));
