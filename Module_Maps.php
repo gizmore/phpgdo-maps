@@ -77,7 +77,7 @@ final class Module_Maps extends GDO_Module
 	public function getUserConfig(): array
 	{
 		return [
-			GDT_Position::make('position'),
+			GDT_Position::make('position')->hidden(),
 		];
 	}
 
