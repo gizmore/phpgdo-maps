@@ -140,8 +140,6 @@ final class GDT_Position extends GDT_Composite
 		return $this->getValue();
 	}
 
-
-
 	public function getValue(): mixed
 	{
 		$lat = $this->lat->getValue();
