@@ -4,8 +4,10 @@ namespace GDO\Maps\Test;
 
 use GDO\Maps\GDO_UserPosition;
 use GDO\Maps\GDT_Position;
+use GDO\Maps\GDT_PosRect;
 use GDO\Maps\Method\Record;
 use GDO\Maps\Module_Maps;
+use GDO\Maps\Position;
 use GDO\Tests\TestCase;
 
 
@@ -22,6 +24,15 @@ final class MapsTest extends TestCase
 		$result = $pos->renderCLI();
 		$this->assertOK('Test if a positions does not crash.');
 		self::assertStringContainsString('°', $result, 'Test if position renders CLI.');
+	}
+
+	public function testPositionRectangle(): void
+	{
+		$rect = GDT_PosRect::make('rect')->initialCorners(53.0, 10.0, 52.0, 11.0);
+		self::assertSame('[53,10,52,11]', $rect->getVar());
+		self::assertTrue($rect->getValue()->contains(new Position(52.5, 10.5)));
+		self::assertFalse($rect->getValue()->contains(new Position(51.5, 10.5)));
+		self::assertSame($rect->getVar(), GDT_PosRect::make('rect')->var($rect->getVar())->getVar());
 	}
 
 	public function testRecording(): void
