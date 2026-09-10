@@ -47,6 +47,14 @@ final class MapsTest extends TestCase
 		self::assertStringContainsString('polygon JSON', $polygon->gdoColumnDefine());
 	}
 
+	public function testRadiusPolygon(): void
+	{
+		$polygon = json_decode(GDT_Polygon::fromRadius(52.32, 10.23, 0.15), true, 512, JSON_THROW_ON_ERROR);
+		self::assertSame('Polygon', $polygon['type']);
+		self::assertCount(17, $polygon['coordinates'][0]);
+		self::assertSame($polygon['coordinates'][0][0], $polygon['coordinates'][0][16]);
+	}
+
 	public function testRecording(): void
 	{
 		$i = [
