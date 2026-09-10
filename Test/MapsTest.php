@@ -4,6 +4,7 @@ namespace GDO\Maps\Test;
 
 use GDO\Maps\GDO_UserPosition;
 use GDO\Maps\GDT_Position;
+use GDO\Maps\GDT_Polygon;
 use GDO\Maps\GDT_PosRect;
 use GDO\Maps\Method\Record;
 use GDO\Maps\Module_Maps;
@@ -33,6 +34,17 @@ final class MapsTest extends TestCase
 		self::assertTrue($rect->getValue()->contains(new Position(52.5, 10.5)));
 		self::assertFalse($rect->getValue()->contains(new Position(51.5, 10.5)));
 		self::assertSame($rect->getVar(), GDT_PosRect::make('rect')->var($rect->getVar())->getVar());
+	}
+
+	public function testPolygon(): void
+	{
+		$coordinates = [
+			'type' => 'Polygon',
+			'coordinates' => [[[10.22, 52.32], [10.23, 52.32], [10.23, 52.33], [10.22, 52.32]]],
+		];
+		$polygon = GDT_Polygon::make('polygon')->value($coordinates);
+		self::assertSame($coordinates, $polygon->getValue());
+		self::assertStringContainsString('polygon JSON', $polygon->gdoColumnDefine());
 	}
 
 	public function testRecording(): void
