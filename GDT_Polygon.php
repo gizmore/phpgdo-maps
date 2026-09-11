@@ -54,6 +54,45 @@ final class GDT_Polygon extends GDT_JSON
 		]);
 	}
 
+	/**
+	 * Creates a square whose corners are roughly $radiusKm from its centre.
+	 * This makes the matching visibility radius easy to reason about.
+	 */
+	public static function fromSquare(float $lat, float $lng, float $radiusKm): string
+	{
+		$radiusKm = max(0.001, $radiusKm) / sqrt(2);
+		$latitudeDegrees = $radiusKm / 111.32;
+		$longitudeDegrees = $radiusKm / (111.32 * max(0.01, cos(deg2rad($lat))));
+		return self::fromBounds(
+			$lat - $latitudeDegrees,
+			$lng - $longitudeDegrees,
+			$lat + $latitudeDegrees,
+			$lng + $longitudeDegrees,
+		);
+	}
+
+	/** Returns the distance in kilometres from a centre point to its farthest polygon vertex. */
+	public static function radiusFromCenter(array|string $polygon, float $lat, float $lng): float
+	{
+		if (is_string($polygon))
+		{
+			$polygon = json_decode($polygon, true) ?: [];
+		}
+		$radius = 0.0;
+		$longitudeScale = 111.32 * cos(deg2rad($lat));
+		foreach (($polygon['coordinates'][0] ?? []) as $point)
+		{
+			if (!is_array($point) || count($point) !== 2)
+			{
+				continue;
+			}
+			$northKm = ((float)$point[1] - $lat) * 111.32;
+			$eastKm = ((float)$point[0] - $lng) * $longitudeScale;
+			$radius = max($radius, hypot($northKm, $eastKm));
+		}
+		return $radius;
+	}
+
 	public function gdtDefaultLabel(): ?string
 	{
 		return 'polygon';
