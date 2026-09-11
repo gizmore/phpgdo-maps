@@ -18,7 +18,7 @@ final class GDT_Polygon extends GDT_JSON
 	 * The polygon deliberately uses multiple points rather than a bounding box,
 	 * so it is a close match for the existing circular room geofences.
 	 */
-	public static function fromRadius(float $lat, float $lng, float $radiusKm, int $sides = 4): string
+	public static function fromRadius(float $lat, float $lng, float $radiusKm, int $sides = 6): string
 	{
 		$sides = max(4, $sides);
 		$points = [];

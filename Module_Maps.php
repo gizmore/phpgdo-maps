@@ -130,14 +130,14 @@ final class Module_Maps extends GDO_Module
 
 	private function googleMapsScriptURL(): string
 	{
-		$sensors = $this->cfgSensors() ? 'true' : 'false';
 		$apikey = $this->cfgApiKey();
-		if (!empty($apikey))
+		$params = [];
+		if ($apikey !== '')
 		{
-			$apikey = '&key=' . $apikey;
+			$params['key'] = $apikey;
 		}
-		return sprintf('https://maps.google.com/maps/api/js?sensors=%s%s',
-			$sensors, $apikey);
+		// maps.google.com/maps/api/js and its `sensors` parameter are obsolete.
+		return 'https://maps.googleapis.com/maps/api/js?' . http_build_query($params);
 	}
 
 	public function cfgSensors(): bool { return $this->getConfigValue('maps_sensors'); }
