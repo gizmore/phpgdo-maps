@@ -6,6 +6,7 @@ use GDO\Core\GDO_Module;
 use GDO\Core\GDT;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Secret;
+use GDO\Core\GDT_UInt;
 use GDO\Core\Javascript;
 use GDO\Date\GDT_Duration;
 use GDO\UI\GDT_Divider;
@@ -79,18 +80,29 @@ final class Module_Maps extends GDO_Module
 		return [
 			GDT_Position::make('position')->hidden(),
 			GDT_Velocity::make('max_velocity')->min(0.0)->max(1000.0)->initial('0.0')->hidden(),
+			GDT_UInt::make('max_keypress')->min(0)->max(65535)->initial('0')->hidden(),
 		];
 	}
 
 	public function cfgRecord(): bool { return $this->getConfigValue('maps_record'); }
 
 	public function userMaxVelocity(GDO_User $user): float { return (float)$this->userSettingValue($user, 'max_velocity'); }
+	public function userMaxKeypress(GDO_User $user): int { return (int)$this->userSettingValue($user, 'max_keypress'); }
 
 	public function recordVelocity(GDO_User $user, float $velocity): void
 	{
 		if ($velocity > $this->userMaxVelocity($user))
 		{
 			$this->saveUserSetting($user, 'max_velocity', (string)round($velocity, 2));
+		}
+	}
+
+	/** Keep the highest input-burst count observed in the rolling one-minute window. */
+	public function recordKeypress(GDO_User $user, int $keypresses): void
+	{
+		if ($keypresses > $this->userMaxKeypress($user))
+		{
+			$this->saveUserSetting($user, 'max_keypress', (string)$keypresses);
 		}
 	}
 
