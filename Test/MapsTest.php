@@ -6,6 +6,7 @@ use GDO\Maps\GDO_UserPosition;
 use GDO\Maps\GDT_Position;
 use GDO\Maps\GDT_Polygon;
 use GDO\Maps\GDT_PosRect;
+use GDO\Maps\GDT_Velocity;
 use GDO\Maps\Method\Record;
 use GDO\Maps\Module_Maps;
 use GDO\Maps\Position;
@@ -25,6 +26,12 @@ final class MapsTest extends TestCase
 		$result = $pos->renderCLI();
 		$this->assertOK('Test if a positions does not crash.');
 		self::assertStringContainsString('°', $result, 'Test if position renders CLI.');
+	}
+
+	public function testVelocity(): void
+	{
+		$velocity = GDT_Velocity::make('velocity')->var('10.5');
+		self::assertSame('10.5', $velocity->getVar());
 	}
 
 	public function testPositionRectangle(): void

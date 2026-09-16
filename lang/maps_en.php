@@ -6,6 +6,8 @@ return [
 	'position' => 'Position',
 	'latitude' => 'Latitude',
 	'longitude' => 'Longitude',
+	'velocity' => 'Velocity (km/h)',
+	'cfg_max_velocity' => 'Maximum velocity (km/h)',
 	'info_div_maps_google' => 'Status of google positioning code and data.',
 	'cfg_maps_api_google' => 'GoogleMaps(tm) JavaScript(s)',
 	'cfg_maps_sensors' => 'Google Positioning',

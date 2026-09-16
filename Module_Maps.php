@@ -78,10 +78,13 @@ final class Module_Maps extends GDO_Module
 	{
 		return [
 			GDT_Position::make('position')->hidden(),
+			GDT_Velocity::make('max_velocity')->min(0.0)->max(1000.0)->initial('10.0'),
 		];
 	}
 
 	public function cfgRecord(): bool { return $this->getConfigValue('maps_record'); }
+
+	public function userMaxVelocity(GDO_User $user): float { return (float)$this->userSettingValue($user, 'max_velocity'); }
 
 	public function getPrivacyRelatedFields(): array
 	{
