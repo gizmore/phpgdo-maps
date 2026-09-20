@@ -9,6 +9,7 @@ return [
 	'velocity' => 'Geschwindigkeit (km/h)',
 	'cfg_max_velocity' => 'Geschwindigkeitsrekord (km/h)',
 	'cfg_max_keypress' => 'Eingabeaktivitäts-Rekord pro Minute',
+	'max_keypress' => 'Tastenanschlagrate',
 	'info_div_maps_google' => 'Status von Google-Positionierungscode und -daten.',
 	'cfg_maps_api_google' => 'GoogleMaps(tm) JavaScript(s)',
 	'cfg_maps_sensors' => 'Google-Positionierung',

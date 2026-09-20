@@ -9,6 +9,7 @@ return [
 	'velocity' => '속도(km/h)',
 	'cfg_max_velocity' => '속도 기록(km/h)',
 	'cfg_max_keypress' => '분당 활동기록 입력',
+	'max_keypress' => '키 입력 속도',
 	'info_div_maps_google' => 'Google 위치 코드 및 데이터의 상태입니다.',
 	'cfg_maps_api_google' => 'GoogleMaps(tm) 자바스크립트',
 	'cfg_maps_sensors' => '구글 포지셔닝',
